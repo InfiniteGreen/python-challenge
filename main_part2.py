@@ -57,13 +57,13 @@ vote_percent=[]
 while k<len(unique_candidate_list):
     vote_count.append(candidate_list.count(str(unique_candidate_list[k])))    
     vote_percent.append("{:.3%}".format(vote_count[k]/totalvotes))
-
+    k+=1
 #vote_count   
 #vote_percent 
 #winner    
 
 
-# In[19]:
+# In[7]:
 
 
 #Get the Poll winner
@@ -71,7 +71,7 @@ winner=unique_candidate_list[vote_count.index(max(vote_count))]
 winner
 
 
-# In[7]:
+# In[8]:
 
 
 #Print results
@@ -90,14 +90,14 @@ print('Winner: ' + str(winner))
 print("---------------------------") 
 
 
-# In[10]:
+# In[9]:
 
 
 # Specify the file to write to
 output_path = os.path.join("poll_out.csv")
 
 
-# In[12]:
+# In[10]:
 
 
 # Open the file using "write" mode

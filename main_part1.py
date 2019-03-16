@@ -22,6 +22,8 @@ budget_path = os.path.join('PyBank','Resources','budget_data.csv')
 #define variables
 total=0
 new_buget_list=[]
+new_buget_date=[]
+buget_change=[]
 max_profit_date=''
 max_profit_num=0
 min_profit_date=''
@@ -42,27 +44,45 @@ with open (budget_path, newline='') as budget_csv:
     for row in budget_reader:              
         total += int(row[1])
         new_buget_list.append(int(row[1]))
-        if int(row[1])>=0:
-            if int(row[1])>max_profit_num:
-                max_profit_num = int(row[1])
-                max_profit_date = row[0]
-        else:
-            if int(row[1])<min_profit_num:
-                min_profit_num = int(row[1])
-                min_profit_date = row[0]
+        new_buget_date.append(row[0])
+
+# Generate a list with budget changes
+i=1
+while i<len(new_buget_list):    
+    buget_change.append((new_buget_list[i]-new_buget_list[i-1]))
+    i+=1
+
+    
+#         if int(row[1])>=0:
+#             if int(row[1])>max_profit_num:
+#                 max_profit_num = int(row[1])
+#                 max_profit_date = row[0]
+#         else:
+#             if int(row[1])<min_profit_num:
+#                 min_profit_num = int(row[1])
+#                 min_profit_date = row[0]
 
 
 # In[5]:
 
 
-#print(new_buget_list)
-#print(len(new_buget_list))
-total_month = len(new_buget_list)
-#Calculate Average  Change
-ave_change = round((new_buget_list[total_month-1]-new_buget_list[0])/total_month,2)    
+# Calculate Max & Min budge change
+max_profit_num=max(buget_change)
+max_profit_date=new_buget_date[buget_change.index(max_profit_num)+1]
+min_profit_num=min(buget_change)
+min_profit_date=new_buget_date[buget_change.index(min_profit_num)+1]
 
 
 # In[6]:
+
+
+#Calculate total month
+total_month = len(new_buget_list)
+#Calculate Average  Change
+ave_change = round(sum(buget_change)/len(buget_change),2)    
+
+
+# In[7]:
 
 
 #Print results
@@ -75,14 +95,14 @@ print('Greatest Increase in Profits: ' + max_profit_date + ' ($' + str(max_profi
 print('Greatest Decrease in Profits: ' + min_profit_date + ' ($' + str(min_profit_num) + ')')
 
 
-# In[7]:
+# In[8]:
 
 
 # Specify the file to write to
 output_path = os.path.join("budget_out.csv")
 
 
-# In[8]:
+# In[9]:
 
 
 # Open the file using "write" mode
